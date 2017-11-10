@@ -6,7 +6,6 @@
     <link href="style.css" rel="stylesheet" />
 </head>
 <body>
-
     <h1>Mon blog !</h1>
     <p>Derniers billets du blog :</p>
 
@@ -23,7 +22,8 @@
                 
             <p>
             	<strong><?= nl2br(htmlspecialchars($data['lead_paragraph'])) ?></strong>
-            	<?= nl2br(htmlspecialchars($data['content'])) ?>
+                <br>
+                <em><a href="post.php?id=<?= $data['id'] ?>">Voir le post en entier</a></em>
         	</p>
         </div>
     <?php
