@@ -1,5 +1,5 @@
 <?php
-require('controler.php');
+require('controller/controler.php');
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'listPosts') {
