@@ -22,10 +22,18 @@ try {
 	            throw new Exception('Aucun identifiant de billet envoyé');
 	        }
 	    }
+	    elseif ($_GET['action'] == 'newPost') {
+            if ( ! empty($_POST['author']) && ! empty($_POST['title']) && ! empty($_POST['lead_paragraph']) && ! empty($_POST['content'])) {
+                newPost( $_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
+            }
+            else {
+                throw new Exception('Tous les champs ne sont pas remplis !');
+            }
+	    }	    
 	    elseif ($_GET['action'] == 'editPost') {
 	        if (isset($_GET['id']) && $_GET['id'] > 0) {
 	            if ( ! empty($_POST['author']) && ! empty($_POST['title']) && ! empty($_POST['lead_paragraph']) && ! empty($_POST['content'])) {
-	                editPost($_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content'], $_GET['id']);
+	                editPost($_GET['id'], $_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
 	            }
 	            else {
 	                throw new Exception('Tous les champs ne sont pas remplis !');
