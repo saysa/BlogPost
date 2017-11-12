@@ -24,7 +24,7 @@ try {
 	    }
 	    elseif ($_GET['action'] == 'newPost') {
             if ( ! empty($_POST['author']) && ! empty($_POST['title']) && ! empty($_POST['lead_paragraph']) && ! empty($_POST['content'])) {
-                newPost( $_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
+                newPost($_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
             }
             else {
                 throw new Exception('Tous les champs ne sont pas remplis !');
@@ -43,11 +43,14 @@ try {
 	            throw new Exception('Aucun identifiant de billet envoyé');
 	        }
 	    }
+	    else {
+	    	throw new Exception("Action non valide");
+	    }
 	}
 	else {
 	    listPosts();
 	}
 } 
 catch(Exception $e) {
-    echo 'Erreur : ' . $e->getMessage();
+    error($e->getMessage());
 }

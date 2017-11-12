@@ -4,7 +4,7 @@
 <h1>Mon blog !</h1>
 <p><a href="index.php">Retour à la liste des billets</a></p>
 
-<div class="news">
+<article class="news">
     <h3>
     	<?= htmlspecialchars($post['title']) ?><br>
     	Par <?= htmlspecialchars($post['author']) ?> - 
@@ -17,7 +17,7 @@
     	<br>
     	<em><a href="index.php?action=postForm&amp;id=<?= $post['id'] ?>">Modifier le billet</a></em>
 	</p>
-</div>
+</article>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
