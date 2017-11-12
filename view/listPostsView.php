@@ -8,7 +8,7 @@
 while ($data = $posts->fetch())
 {
 ?>
-    <div class="news">
+    <article class="news">
         <h3>
         	<?= htmlspecialchars($data['title']) ?><br>
         	Par <?= htmlspecialchars($data['author']) ?> - 
@@ -20,7 +20,7 @@ while ($data = $posts->fetch())
             <br>
             <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Voir le billet</a></em>
     	</p>
-    </div>
+    </article>
 <?php
 }
 $posts->closeCursor();
