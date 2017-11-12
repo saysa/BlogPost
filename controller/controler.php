@@ -45,3 +45,7 @@ function editPost($postId, $author, $title, $lead_paragraph, $content)
         header('Location: index.php?action=post&id=' . $postId);
     }
 }
+
+function error($errorMessage) {
+    require 'view/errorView.php';
+}
