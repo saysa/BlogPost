@@ -1,0 +1,25 @@
+{% extends 'template.twig' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Mon blog !</h1>
+    <p><a href="index.php">Retour à la liste des billets</a></p>
+
+    <article class="news">
+        <h3>
+        	{{ post.title }}<br>
+        	Par {{ post.author }} - 
+        	<em>dernière modification {{ post.last_update|nl2br }}</em>
+        </h3>
+            
+        <p>
+        	<strong>{{ post.lead_paragraph }}</strong>
+        	{{ post.content|nl2br }}
+        	<br>
+        	<em><a href="index.php?action=postForm&amp;id={{ post.id }}">Modifier le billet</a></em>
+    	</p>
+    </article>
+{% endblock %}

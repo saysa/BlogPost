@@ -1,14 +1,22 @@
 <?php
+require_once __DIR__. '/vendor/autoload.php';
+$loader = new Twig_Loader_Filesystem(__DIR__ . '/view');
+$twig = new Twig_Environment($loader, array(
+    'cache' => false 
+));
+
 require('controller/controler.php');
 
 try {
 	if (isset($_GET['action'])) {
 	    if ($_GET['action'] == 'listPosts') {
-	        listPosts();
+	        $posts = listPosts();
+	        echo $twig->render('listPostsView.twig', ['posts' => $posts]);
 	    }
 	    elseif ($_GET['action'] == 'post') {
 	        if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            post();
+	            $post = post();
+	            echo $twig->render('postView.twig', ['post' => $post]);
 	        }
 	        else {
 	            throw new Exception('Aucun identifiant de billet envoyé');
@@ -16,7 +24,8 @@ try {
 	    }    
 	    elseif ($_GET['action'] == 'postForm') {
 	        if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            postForm();
+	            $post = postForm();
+	            echo $twig->render('postFormView.twig', ['post' => $post]);
 	        }
 	        else {
 	            throw new Exception('Aucun identifiant de billet envoyé');
@@ -48,9 +57,11 @@ try {
 	    }
 	}
 	else {
-	    listPosts();
+	    $posts = listPosts();
+	    echo $twig->render('listPostsView.twig', ['posts' => $posts]);
 	}
 } 
 catch(Exception $e) {
-    error($e->getMessage());
+	echo $twig->render('errorView.twig', ['errorMessage' => $e->getMessage()]);
 }
+// header('HTTP/1.0  404 not found');
