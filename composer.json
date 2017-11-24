@@ -1,0 +1,12 @@
+{
+    "name": "oc/blogpost",
+    "require": {
+        "twig/twig": "^2.4"
+    },
+    "authors": [
+        {
+            "name": "percevalseb1309",
+            "email": "percevalseb@gmail.com"
+        }
+    ]
+}

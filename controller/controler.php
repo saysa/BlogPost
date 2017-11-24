@@ -3,16 +3,18 @@ require('model/model.php');
 
 function listPosts()
 {
-    $posts = getPosts();
-    
-    require('view/listPostsView.php');
+    /*$posts = getPosts();
+
+    require('view/listPostsView.php');*/
+    return getPosts();
 }
 
 function post()
 {
-    $post = getPost($_GET['id']);
+    /*$post = getPost($_GET['id']);
 
-    require('view/postView.php');
+    require('view/postView.php');*/
+    return getPost($_GET['id']);
 }
 
 function newPost($author, $title, $lead_paragraph, $content)
@@ -29,9 +31,10 @@ function newPost($author, $title, $lead_paragraph, $content)
 
 function postForm()
 {
-    $post = getPost($_GET['id']);
+    /*$post = getPost($_GET['id']);
 
-    require('view/postFormView.php');
+    require('view/postFormView.php');*/
+    return getPost($_GET['id']);
 }
 
 function editPost($postId, $author, $title, $lead_paragraph, $content)
@@ -46,6 +49,6 @@ function editPost($postId, $author, $title, $lead_paragraph, $content)
     }
 }
 
-function error($errorMessage) {
+/*function error($errorMessage) {
     require 'view/errorView.php';
-}
+}*/
