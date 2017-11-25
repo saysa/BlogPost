@@ -4,16 +4,14 @@ require('model/model.php');
 function listPosts()
 {
     /*$posts = getPosts();
-
-    require('view/listPostsView.php');*/
+    echo $GLOBALS['twig']->render('listPostsView.twig', ['base_url' => BASE_URL, 'posts' => $posts]);*/
     return getPosts();
 }
 
 function post()
 {
     /*$post = getPost($_GET['id']);
-
-    require('view/postView.php');*/
+    echo $GLOBALS['twig']->render('postView.twig', ['base_url' => BASE_URL, 'post' => $post]);*/
     return getPost($_GET['id']);
 }
 
@@ -25,15 +23,14 @@ function newPost($author, $title, $lead_paragraph, $content)
     	throw new Exception('Impossible d\'ajouter un billet !');
     }
     else {
-        header('Location: index.php');
+        header('Location: ' .BASE_URL. 'index.php');
     }
 }
 
 function postForm()
 {
     /*$post = getPost($_GET['id']);
-
-    require('view/postFormView.php');*/
+    echo $GLOBALS['twig']->render('postFormView.twig', ['base_url' => BASE_URL, 'post' => $post]);*/
     return getPost($_GET['id']);
 }
 
@@ -45,7 +42,7 @@ function editPost($postId, $author, $title, $lead_paragraph, $content)
     	throw new Exception('Impossible de modifier le billet !');
     }
     else {
-        header('Location: index.php?action=post&id=' . $postId);
+        header('Location: ' .BASE_URL. 'index.php/post/' .$postId);
     }
 }
 
