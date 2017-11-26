@@ -1,6 +1,8 @@
 <?php
 require_once('model/PostManager.php');
 
+use \OC\Blog\Model\PostManager;
+
 function listPosts()
 {
     /*$posts = getPosts();
