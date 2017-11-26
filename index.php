@@ -16,7 +16,7 @@ try {
     	if (isset($matches[2])) {
     		$_GET['id'] = $matches[2];
     	}
-    }
+    } 
 
 	if (isset($_GET['action'])) {
 	    if ($_GET['action'] == 'listPosts') {
