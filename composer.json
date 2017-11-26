@@ -2,7 +2,8 @@
     "name": "oc/blogpost",
     "require": {
         "twig/twig": "^2.4",
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^6.0",
+        "twbs/bootstrap": "4.0.0-beta.2"
     },
     "authors": [
         {
