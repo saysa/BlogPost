@@ -8,6 +8,8 @@ $twig = new Twig_Environment($loader, array(
 ));
 
 require('controller/controller.php');
+require('view/View.php');
+use \OC\BlogPost\View\View;
 
 try {
 	preg_match('#^/BlogPost/index.php?/(\w+)/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
@@ -20,13 +22,15 @@ try {
 
 	if (isset($_GET['action'])) {
 	    if ($_GET['action'] == 'listPosts') {
-	        $posts = listPosts();
-	        echo $twig->render('listPostsView.twig', ['base_url' => BASE_URL, 'posts' => $posts]);
+            $data['posts'] = listPosts();
+        	$view = new View($twig, $_GET['action']);
+        	$view->generate($data);
 	    }
 	    elseif ($_GET['action'] == 'post') {
 	        if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            $post = post();
-	            echo $twig->render('postView.twig', ['base_url' => BASE_URL, 'post' => $post]);
+                $data['post'] = post();
+            	$view = new View($twig, $_GET['action']);
+            	$view->generate($data);
 	        }
 	        else {
 	            throw new Exception('Aucun identifiant de billet envoyé');
@@ -34,8 +38,9 @@ try {
 	    }    
 	    elseif ($_GET['action'] == 'postForm') {
 	        if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            $post = postForm();
-	            echo $twig->render('postFormView.twig', ['base_url' => BASE_URL, 'post' => $post]);
+                $data['post'] = postForm();
+            	$view = new View($twig, $_GET['action']);
+            	$view->generate($data);
 	        }
 	        else {
 	            throw new Exception('Aucun identifiant de billet envoyé');
@@ -67,8 +72,9 @@ try {
 	    }
 	}
 	else {
-	    $posts = listPosts();
-	    echo $twig->render('listPostsView.twig', ['base_url' => BASE_URL, 'posts' => $posts]);
+	    $data['posts'] = listPosts();
+		$view = new View($twig, 'listPosts');
+		$view->generate($data);
 	}
 } 
 catch(Exception $e) {
