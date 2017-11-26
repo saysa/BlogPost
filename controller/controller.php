@@ -5,16 +5,12 @@ use \OC\BlogPost\Model\PostManager;
 
 function listPosts()
 {
-    /*$posts = getPosts();
-    echo $GLOBALS['twig']->render('listPostsView.twig', ['base_url' => BASE_URL, 'posts' => $posts]);*/
     $postManager = new PostManager();
     return $postManager->getPosts();
 }
 
 function post()
 {
-    /*$post = getPost($_GET['id']);
-    echo $GLOBALS['twig']->render('postView.twig', ['base_url' => BASE_URL, 'post' => $post]);*/
     $postManager = new PostManager();
     return $postManager->getPost($_GET['id']);
 }
@@ -34,8 +30,6 @@ function newPost($author, $title, $lead_paragraph, $content)
 
 function postForm()
 {
-    /*$post = getPost($_GET['id']);
-    echo $GLOBALS['twig']->render('postFormView.twig', ['base_url' => BASE_URL, 'post' => $post]);*/
     $postManager = new PostManager();
     return $postManager->getPost($_GET['id']);
 }
