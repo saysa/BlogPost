@@ -1,7 +1,7 @@
 <?php
 require_once('model/PostManager.php');
 
-use \OC\Blog\Model\PostManager;
+use \OC\BlogPost\Model\PostManager;
 
 function listPosts()
 {
