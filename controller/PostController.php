@@ -24,9 +24,9 @@ class PostController
         $view->generate($data);
     }
 
-    public function post()
+    public function post($postId)
     {
-        $data['post'] = $this->_postManager->getPost($_GET['id']);
+        $data['post'] = $this->_postManager->getPost($postId);
         $view = new View($this->_twig, 'post');
         $view->generate($data);
     }
@@ -37,16 +37,16 @@ class PostController
         $affectedLines = $postManager->addPost($author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new Exception('Impossible d\'ajouter un billet !');
+        	throw new \Exception('Impossible d\'ajouter un billet !');
         }
         else {
             header('Location: ' .BASE_URL. 'index.php');
         }
     }
 
-    public function postForm()
+    public function postForm($postId)
     {
-        $data['post'] = $this->_postManager->getPost($_GET['id']);
+        $data['post'] = $this->_postManager->getPost($postId);
         $view = new View($this->_twig, 'postForm');
         $view->generate($data);
     }
@@ -57,7 +57,7 @@ class PostController
         $affectedLines = $postManager->updatePost($postId, $author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new Exception('Impossible de modifier le billet !');
+        	throw new \Exception('Impossible de modifier le billet !');
         }
         else {
             header('Location: ' .BASE_URL. 'index.php/post/' .$postId);

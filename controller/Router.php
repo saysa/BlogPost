@@ -1,5 +1,5 @@
 <?php
-namespace OC\BlogPost\Router;
+namespace OC\BlogPost\Controller;
 
 require('PostController.php');
 use \OC\BlogPost\Controller\PostController;
@@ -18,6 +18,16 @@ class Router
 	    $this->_postController = new PostController($twig);
 	}
 
+	private function getParameter($array, $key) {
+	  	if (isset($array[$key])) {
+	  		if ( ! empty($array[$key])) {
+	  			return $array[$key];
+	  		}
+	    	throw new \Exception("Paramètre '" .$key. "' vide");
+	  	}
+	    throw new \Exception("Paramètre '" .$key. "' absent");
+	}
+
 	public function routeRequest()
 	{
 		try {
@@ -34,54 +44,54 @@ class Router
 		    	    $this->_postController->listPosts();
 			    }
 			    elseif ($_GET['action'] == 'post') {
-			        if (isset($_GET['id']) && $_GET['id'] > 0) {
-		        	    $this->_postController->post();
+			        $postId = intval($this->getParameter($_GET, 'id'));
+			        if ($postId != 0) {
+			            $this->_postController->post($postId);
 			        }
-			        else {
-			            throw new Exception('Aucun identifiant de billet envoyé');
-			        }
-			    }    
+			        else
+			            throw new \Exception("Identifiant de billet non valide");
+			    }
 			    elseif ($_GET['action'] == 'postForm') {
-			        if (isset($_GET['id']) && $_GET['id'] > 0) {
-		        	    $this->_postController->postForm();
-			        }
-			        else {
-			            throw new Exception('Aucun identifiant de billet envoyé');
-			        }
+			    	$postId = intval($this->getParameter($_GET, 'id'));
+			    	if ($postId != 0) {
+			    	    $this->_postController->postForm($postId);
+			    	}
+			    	else
+			    	    throw new \Exception("Identifiant de billet non valide");
 			    }
 			    elseif ($_GET['action'] == 'newPost') {
-		            if ( ! empty($_POST['author']) && ! empty($_POST['title']) && ! empty($_POST['lead_paragraph']) && ! empty($_POST['content'])) {
-		                $this->_postController->newPost($_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
-		            }
-		            else {
-		                throw new Exception('Tous les champs ne sont pas remplis !');
-		            }
+			    	$author = $this->getParameter($_POST, 'author');
+			    	$title = $this->getParameter($_POST, 'title');
+			    	$lead_paragraph = $this->getParameter($_POST, 'lead_paragraph');
+			    	$content = $this->getParameter($_POST, 'content');
+			    	$this->_postController->newPost($author, $title, $lead_paragraph, $content);
+		            // throw new \Exception('Tous les champs ne sont pas remplis !');
 			    }	    
-			    elseif ($_GET['action'] == 'editPost') {
-			        if (isset($_GET['id']) && $_GET['id'] > 0) {
-			            if ( ! empty($_POST['author']) && ! empty($_POST['title']) && ! empty($_POST['lead_paragraph']) && ! empty($_POST['content'])) {
-			                $this->_postController->editPost($_GET['id'], $_POST['author'], $_POST['title'], $_POST['lead_paragraph'], $_POST['content']);
-			            }
-			            else {
-			                throw new Exception('Tous les champs ne sont pas remplis !');
-			            }
-			        }
-			        else {
-			            throw new Exception('Aucun identifiant de billet envoyé');
-			        }
+			    elseif ($_GET['action'] == 'editPost') {   
+			    	$postId = intval($this->getParameter($_GET, 'id'));
+			    	if ($postId != 0) {
+			    		$author = $this->getParameter($_POST, 'author');
+			    		$title = $this->getParameter($_POST, 'title');
+			    		$lead_paragraph = $this->getParameter($_POST, 'lead_paragraph');
+			    		$content = $this->getParameter($_POST, 'content');
+			    		$this->_postController->editPost($postId, $author, $title, $lead_paragraph, $content);
+			    		// throw new \Exception('Tous les champs ne sont pas remplis !');
+			    	}
+			    	else
+			    	    throw new \Exception("Identifiant de billet non valide");
 			    }
 			    else {
-			    	throw new Exception("Action non valide");
+			    	throw new \Exception("404 : La page que vous cherchez n'existe pas");
+			    	// header('HTTP/1.0  404 not found');
 			    }
 			}
 			else {
 			    $this->_postController->listPosts();
 			}
 		} 
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			$this->error($e->getMessage());
 		}
-		// header('HTTP/1.0  404 not found');
 	}
 
 	private function error($errorMessage) 
