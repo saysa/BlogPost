@@ -18,16 +18,6 @@ class Router
 	    $this->_postController = new PostController($twig);
 	}
 
-	private function getParameter($array, $key) {
-	  	if (isset($array[$key])) {
-	  		if ( ! empty($array[$key])) {
-	  			return $array[$key];
-	  		}
-	    	throw new \Exception("Paramètre '" .$key. "' vide");
-	  	}
-	    throw new \Exception("Paramètre '" .$key. "' absent");
-	}
-
 	public function routeRequest()
 	{
 		try {
@@ -92,6 +82,16 @@ class Router
 		catch(\Exception $e) {
 			$this->error($e->getMessage());
 		}
+	}
+
+	private function getParameter($array, $key) {
+	  	if (isset($array[$key])) {
+	  		if ( ! empty($array[$key])) {
+	  			return $array[$key];
+	  		}
+	    	throw new \Exception("Paramètre '" .$key. "' vide");
+	  	}
+	    throw new \Exception("Paramètre '" .$key. "' absent");
 	}
 
 	private function error($errorMessage) 

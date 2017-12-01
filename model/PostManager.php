@@ -1,7 +1,8 @@
 <?php
 namespace OC\BlogPost\Model;
 
-require_once('Manager.php');
+require_once('framework/Manager.php');
+use \OC\BlogPost\Framework\Manager;
 
 class PostManager extends Manager
 {
