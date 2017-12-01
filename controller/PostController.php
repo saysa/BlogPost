@@ -4,15 +4,15 @@ namespace OC\BlogPost\Controller;
 require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
 
-require('view/View.php');
 use \OC\BlogPost\View\View;
 
-class PostController
+class PostController 
 {
     private $_twig;
     private $_postManager;
 
-    public function __construct($twig) {
+    public function __construct($twig) 
+    {
         $this->_twig = $twig;
         $this->_postManager = new PostManager();
     }
@@ -63,8 +63,4 @@ class PostController
             header('Location: ' .BASE_URL. 'index.php/post/' .$postId);
         }
     }
-
-    /*public function error($errorMessage) {
-        require 'view/errorView.php';
-    }*/
 }
