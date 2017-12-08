@@ -1,18 +1,18 @@
 <?php
-namespace OC\BlogPost\Controller;
+namespace OC\BlogPost\Framework;
 
-require('PostController.php');
+require('controller/PostController.php');
 use \OC\BlogPost\Controller\PostController;
 
-require('view/View.php');
-use \OC\BlogPost\View\View;
+require('View.php');
+use \OC\BlogPost\Framework\View;
 
 class Router 
 {
 	private $_twig;
 	private $_postController;
 
-	public function __construct($twig) 
+	public function __construct(\Twig_Environment $twig) 
 	{
 		$this->_twig = $twig;
 	    $this->_postController = new PostController($twig);
@@ -27,7 +27,7 @@ class Router
 		    	if (isset($matches[2])) {
 		    		$_GET['id'] = $matches[2];
 		    	}
-		    } 
+		    }
 
 			if (isset($_GET['action'])) {
 			    if ($_GET['action'] == 'listPosts') {

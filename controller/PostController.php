@@ -4,14 +4,14 @@ namespace OC\BlogPost\Controller;
 require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
 
-use \OC\BlogPost\View\View;
+use \OC\BlogPost\Framework\View;
 
 class PostController 
 {
     private $_twig;
     private $_postManager;
 
-    public function __construct($twig) 
+    public function __construct(\Twig_Environment $twig) 
     {
         $this->_twig = $twig;
         $this->_postManager = new PostManager();

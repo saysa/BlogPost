@@ -1,12 +1,12 @@
 <?php
-namespace OC\BlogPost\View;
+namespace OC\BlogPost\Framework;
 
 class View 
 {
     private $_twig;
     private $_file;
 
-    public function __construct($twig, $action) {
+    public function __construct(\Twig_Environment $twig, $action) {
         $this->_twig = $twig;
         $this->_file = $action. 'View.twig';
     }
