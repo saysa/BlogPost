@@ -18,12 +18,12 @@
             <p>
                 <strong>{{ post.lead_paragraph|nl2br }}</strong>
                 <br>
-                <em><a href="index.php/post/{{ post.id }}">Voir le billet</a></em>
+                <em><a href="index.php/post/post/{{ post.id }}">Voir le billet</a></em>
             </p>
         </article>
     {% endfor %}
 
-    <form action="index.php/newPost" method="post">
+    <form action="index.php/post/newPost" method="post">
         <h2>Ajouter un billet</h2>
         <div>
             <label for="author">Auteur</label><br />

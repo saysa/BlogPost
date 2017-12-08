@@ -1,40 +1,45 @@
 <?php
-namespace OC\BlogPost\Controller;
+// namespace OC\BlogPost\Controller;
+
+require_once('framework/Controller.php');
+use \OC\BlogPost\Framework\Controller;
 
 require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
 
-use \OC\BlogPost\Framework\View;
+// use \OC\BlogPost\Framework\View;
 
-class PostController 
+class PostController extends Controller
 {
-    private $_twig;
     private $_postManager;
 
     public function __construct(\Twig_Environment $twig) 
     {
-        $this->_twig = $twig;
+        parent::__construct($twig);
         $this->_postManager = new PostManager();
     }
 
-    public function listPosts()
+    public function index()
     {
         $data['posts'] = $this->_postManager->getPosts();
-        $view = new View($this->_twig, 'listPosts');
-        $view->generate($data);
+        $this->generateView('listPosts', $data);
     }
 
-    public function post($postId)
+    public function post()
     {
+        $postId = $this->_request->getParameter("id");
         $data['post'] = $this->_postManager->getPost($postId);
-        $view = new View($this->_twig, 'post');
-        $view->generate($data);
+        $this->generateView('post', $data);
     }
 
-    public function newPost($author, $title, $lead_paragraph, $content)
+    public function newPost()
     {
-        $postManager = new PostManager();
-        $affectedLines = $postManager->addPost($author, $title, $lead_paragraph, $content);
+        $author         = $this->_request->getParameter("author");
+        $title          = $this->_request->getParameter("title");
+        $lead_paragraph = $this->_request->getParameter("lead_paragraph");
+        $content        = $this->_request->getParameter("content");
+
+        $affectedLines = $this->_postManager->addPost($author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
         	throw new \Exception('Impossible d\'ajouter un billet !');
@@ -44,23 +49,28 @@ class PostController
         }
     }
 
-    public function postForm($postId)
+    public function postForm()
     {
+        $postId = $this->_request->getParameter("id");
         $data['post'] = $this->_postManager->getPost($postId);
-        $view = new View($this->_twig, 'postForm');
-        $view->generate($data);
+        $this->generateView('postForm', $data);
     }
 
-    public function editPost($postId, $author, $title, $lead_paragraph, $content)
+    public function editPost()
     {
-        $postManager = new PostManager();
-        $affectedLines = $postManager->updatePost($postId, $author, $title, $lead_paragraph, $content);
+        $postId         = $this->_request->getParameter("id");
+        $author         = $this->_request->getParameter("author");
+        $title          = $this->_request->getParameter("title");
+        $lead_paragraph = $this->_request->getParameter("lead_paragraph");
+        $content        = $this->_request->getParameter("content");
+
+        $affectedLines = $this->_postManager->updatePost($postId, $author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
         	throw new \Exception('Impossible de modifier le billet !');
         }
         else {
-            header('Location: ' .BASE_URL. 'index.php/post/' .$postId);
+            header('Location: ' .BASE_URL. 'index.php/post/post/' .$postId);
         }
     }
 }

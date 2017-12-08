@@ -1,97 +1,79 @@
 <?php
 namespace OC\BlogPost\Framework;
 
-require('controller/PostController.php');
-use \OC\BlogPost\Controller\PostController;
+require_once('Request.php');
+use \OC\BlogPost\Framework\Request;
 
-require('View.php');
+// require('controller/PostController.php');
+// use \OC\BlogPost\Controller\PostController;
+
+require_once('View.php');
 use \OC\BlogPost\Framework\View;
 
 class Router 
 {
 	private $_twig;
-	private $_postController;
+	// private $_postController;
 
 	public function __construct(\Twig_Environment $twig) 
 	{
 		$this->_twig = $twig;
-	    $this->_postController = new PostController($twig);
+	    // $this->_postController = new PostController($twig);
 	}
 
 	public function routeRequest()
 	{
+		// http://localhost/BlogPost/index.php/post/114
 		try {
-			preg_match('#^/BlogPost/index.php?/(\w+)/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
+			preg_match('#^/BlogPost/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
 		    if ( ! empty($matches) && isset($matches[1])) { 
-		    	$_GET['action'] = $matches[1];
+		    	$_GET['controller'] = $matches[1];
 		    	if (isset($matches[2])) {
-		    		$_GET['id'] = $matches[2];
+		    		$_GET['action'] = $matches[2];
+		    	}		    	
+		    	if (isset($matches[3])) {
+		    		$_GET['id'] = $matches[3];
 		    	}
 		    }
 
-			if (isset($_GET['action'])) {
-			    if ($_GET['action'] == 'listPosts') {
-		    	    $this->_postController->listPosts();
-			    }
-			    elseif ($_GET['action'] == 'post') {
-			        $postId = intval($this->getParameter($_GET, 'id'));
-			        if ($postId != 0) {
-			            $this->_postController->post($postId);
-			        }
-			        else
-			            throw new \Exception("Identifiant de billet non valide");
-			    }
-			    elseif ($_GET['action'] == 'postForm') {
-			    	$postId = intval($this->getParameter($_GET, 'id'));
-			    	if ($postId != 0) {
-			    	    $this->_postController->postForm($postId);
-			    	}
-			    	else
-			    	    throw new \Exception("Identifiant de billet non valide");
-			    }
-			    elseif ($_GET['action'] == 'newPost') {
-			    	$author = $this->getParameter($_POST, 'author');
-			    	$title = $this->getParameter($_POST, 'title');
-			    	$lead_paragraph = $this->getParameter($_POST, 'lead_paragraph');
-			    	$content = $this->getParameter($_POST, 'content');
-			    	$this->_postController->newPost($author, $title, $lead_paragraph, $content);
-		            // throw new \Exception('Tous les champs ne sont pas remplis !');
-			    }	    
-			    elseif ($_GET['action'] == 'editPost') {   
-			    	$postId = intval($this->getParameter($_GET, 'id'));
-			    	if ($postId != 0) {
-			    		$author = $this->getParameter($_POST, 'author');
-			    		$title = $this->getParameter($_POST, 'title');
-			    		$lead_paragraph = $this->getParameter($_POST, 'lead_paragraph');
-			    		$content = $this->getParameter($_POST, 'content');
-			    		$this->_postController->editPost($postId, $author, $title, $lead_paragraph, $content);
-			    		// throw new \Exception('Tous les champs ne sont pas remplis !');
-			    	}
-			    	else
-			    	    throw new \Exception("Identifiant de billet non valide");
-			    }
-			    else {
-			    	throw new \Exception("404 : La page que vous cherchez n'existe pas");
-			    	// header('HTTP/1.0  404 not found');
-			    }
-			}
-			else {
-			    $this->_postController->listPosts();
-			}
-		} 
+		    $request = new Request(array_merge($_GET, $_POST));
+
+		    $controller = $this->createController($request);
+		    $action = $this->createAction($request);
+
+		    $controller->executeAction($action);
+		}
 		catch(\Exception $e) {
 			$this->error($e->getMessage());
 		}
 	}
 
-	private function getParameter($array, $key) {
-	  	if (isset($array[$key])) {
-	  		if ( ! empty($array[$key])) {
-	  			return $array[$key];
-	  		}
-	    	throw new \Exception("Paramètre '" .$key. "' vide");
-	  	}
-	    throw new \Exception("Paramètre '" .$key. "' absent");
+	private function createController(Request $request) {
+	    $controller = "Post";  
+	    if ($request->isParameter('controller')) {
+	        $controller = $request->getParameter('controller');
+	        $controller = ucfirst(strtolower($controller));
+	    }
+
+	    $controllerClass = $controller. "Controller";
+	    $controllerFile = "controller/" . $controllerClass . ".php";
+	    if (file_exists($controllerFile)) {
+	    	require_once($controllerFile);
+	        $controller = new $controllerClass($this->_twig);
+	        $controller->setRequest($request);
+	        return $controller;
+	    }
+	    else {
+	        throw new \Exception("Fichier '". $controllerFile. "' introuvable");
+	    }
+	}
+
+	private function createAction(Request $request) {
+	    $action = 'index'; 
+	    if ($request->isParameter('action')) {
+	        $action = $request->getParameter('action');
+	    }
+	    return $action;
 	}
 
 	private function error($errorMessage) 
