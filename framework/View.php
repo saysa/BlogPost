@@ -6,9 +6,9 @@ class View
     private $_twig;
     private $_file;
 
-    public function __construct(\Twig_Environment $twig, $action) {
+    public function __construct(\Twig_Environment $twig, $view) {
         $this->_twig = $twig;
-        $this->_file = $action. 'View.twig';
+        $this->_file = $view. 'View.twig';
     }
 
     public function generate($data) {

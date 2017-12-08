@@ -8,10 +8,10 @@
     <h1>Mon blog !</h1>
     <p>
     	<a href="{{ base_url }}">Retour à la liste des billets</a><br>
-    	<a href="index.php/post/{{ post.id }}">Retour au billet</a>
+    	<a href="index.php/post/post/{{ post.id }}">Retour au billet</a>
     </p>
 
-    <form action="index.php/editPost/{{ post.id }}" method="post">
+    <form action="index.php/post/editPost/{{ post.id }}" method="post">
     	<h2>Modifier le billet</h2>
         <div>
             <label for="author">Auteur</label><br />
