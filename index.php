@@ -8,8 +8,8 @@ $twig = new Twig_Environment($loader, array(
     'cache' => false 
 ));
 
-require 'Controller/Router.php';
-use \OC\BlogPost\Controller\Router;
+require 'framework/Router.php';
+use \OC\BlogPost\Framework\Router;
 
 $routeur = new Router($twig);
 $routeur->routeRequest();

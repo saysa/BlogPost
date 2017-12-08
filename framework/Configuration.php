@@ -3,19 +3,19 @@ namespace OC\BlogPost\Framework;
 
 class Configuration 
 {
-	private static $parameters;
+	private static $_parameters;
 
 	public static function get($name) 
 	{
 		if (isset(SELF::getParameters()[$name])) {
-			return SELF::$parameters[$name];
+			return SELF::$_parameters[$name];
 		}
 	   	return NULL;
 	}
 
 	private static function getParameters() 
 	{ 
-		if (SELF::$parameters == NULL) {
+		if (SELF::$_parameters == NULL) {
 			switch (ENVIRONMENT) {
 				case 'development':
 					$filePath = "Config/dev.ini";
@@ -29,8 +29,8 @@ class Configuration
 			if ( ! file_exists($filePath)) {
 			    throw new \Exception("Aucun fichier de configuration trouvé");
 			}
-			SELF::$parameters = parse_ini_file($filePath);
+			SELF::$_parameters = parse_ini_file($filePath);
 		}
-		return SELF::$parameters;
+		return SELF::$_parameters;
 	}
 }
