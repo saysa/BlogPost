@@ -23,7 +23,7 @@ class PostManager extends Manager
         if ($post->rowCount() == 1) 
             return $post->fetch();
         else
-            throw new \Exception("Aucun billet ne correspond à l'identifiant '" .$postId. "'");
+            throw new \Exception("Aucun post ne correspond à l'identifiant '" .$postId. "'");
     }
 
     public function addPost($author, $title, $lead_paragraph, $content)

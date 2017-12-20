@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Derniers billets du blog :</h1>
+    <h1>Derniers posts du blog :</h1>
     {% for post in posts %}
         <article class="news">
             <h3>
@@ -17,31 +17,8 @@
             <p>
                 <strong>{{ post.lead_paragraph|nl2br }}</strong>
                 <br>
-                <em><a href="index.php/post/post/{{ post.id }}">Voir le billet</a></em>
+                <em><a href="index.php/post/post/{{ post.id }}">Voir le post</a></em>
             </p>
         </article>
     {% endfor %}
-
-    <form action="index.php/post/newPost" method="post">
-        <h2>Ajouter un billet</h2>
-        <div>
-            <label for="author">Auteur</label><br />
-            <input type="text" id="author" name="author" />
-        </div>      
-        <div>
-            <label for="title">Titre</label><br />
-            <input type="text" id="title" name="title" />
-        </div>
-        <div>
-            <label for="lead_paragraph">Chapô</label><br />
-            <textarea id="lead_paragraph" name="lead_paragraph"></textarea>
-        </div>      
-        <div>
-            <label for="content">Contenu</label><br />
-            <textarea id="content" name="content"></textarea>
-        </div>
-        <div>
-            <input type="submit" />
-        </div>
-    </form>
 {% endblock %}

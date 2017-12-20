@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>Mon blog !</h1>
-    <p><a href="{{ base_url }}">Retour à la liste des billets</a></p>
+    <p><a href="index.php/post">Retour à la liste des posts</a></p>
 
     <article class="news">
         <h3>
@@ -19,7 +19,7 @@
         	<strong>{{ post.lead_paragraph|nl2br }}</strong>
         	{{ post.content|nl2br }}
         	<br>
-        	<em><a href="index.php/post/postForm/{{ post.id }}">Modifier le billet</a></em>
+        	<em><a href="index.php/post/postForm/{{ post.id }}">Modifier le post</a></em>
     	</p>
     </article>
 {% endblock %}
