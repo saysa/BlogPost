@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Mon blog !</h1>
+    <h1>{{ post.title }}</h1>
     <p><a href="index.php/post">Retour à la liste des posts</a></p>
 
     <article class="news">
         <h3>
         	{{ post.title }}<br>
         	Par {{ post.author }} - 
-        	<em>dernière modification {{ post.last_update }}</em>
+        	<em>date de création {{ post.created_date|date("d/m/Y H:i:s") }}</em> -
+            <em>dernière modification {{ post.last_update_date|date("d/m/Y H:i:s") }}</em>
         </h3>
             
         <p>

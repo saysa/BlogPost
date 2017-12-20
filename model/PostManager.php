@@ -8,7 +8,7 @@ class PostManager extends Manager
 {
     public function getPosts()
     {
-        $sql = 'SELECT id, author, title, lead_paragraph, content, DATE_FORMAT(last_update, \'%d/%m/%Y à %Hh%imin%ss\') AS last_update FROM post ORDER BY last_update DESC LIMIT 0, 5';
+        $sql = 'SELECT id, author, title, lead_paragraph, content, last_update_date FROM post ORDER BY last_update_date DESC LIMIT 0, 5';
         $posts = $this->executeRequest($sql);
         
         return $posts->fetchAll();
@@ -16,7 +16,7 @@ class PostManager extends Manager
 
     public function getPost($postId)
     {
-        $sql = 'SELECT id, author, title, lead_paragraph, content, DATE_FORMAT(last_update, \'%d/%m/%Y à %Hh%imin%ss\') AS last_update FROM post WHERE id = ?';
+        $sql = 'SELECT id, author, title, lead_paragraph, content, created_date, last_update_date FROM post WHERE id = ?';
         $params = array($postId);
         $post = $this->executeRequest($sql, $params);
 
@@ -42,7 +42,7 @@ class PostManager extends Manager
 
     public function updatePost($postId, $author, $title, $lead_paragraph, $content)
     {
-        $sql = 'UPDATE post SET author = :author, title = :title, lead_paragraph = :lead_paragraph, content = :content, last_update = NOW() WHERE id = :id';
+        $sql = 'UPDATE post SET author = :author, title = :title, lead_paragraph = :lead_paragraph, content = :content, last_update_date = NOW() WHERE id = :id';
         $params = array(
             'id'             => $postId,
             'author'         => $author, 
