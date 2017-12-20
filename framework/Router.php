@@ -49,7 +49,7 @@ class Router
 	}
 
 	private function createController(Request $request) {
-	    $controller = "Post";  
+	    $controller = "Home";  
 	    if ($request->isParameter('controller')) {
 	        $controller = $request->getParameter('controller');
 	        $controller = ucfirst(strtolower($controller));

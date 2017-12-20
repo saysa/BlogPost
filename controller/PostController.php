@@ -32,6 +32,11 @@ class PostController extends Controller
         $this->generateView('post', $data);
     }
 
+    public function newPostForm()
+    {
+        $this->generateView('addPostForm');
+    }
+
     public function newPost()
     {
         $author         = $this->_request->getParameter("author");
@@ -42,10 +47,10 @@ class PostController extends Controller
         $affectedLines = $this->_postManager->addPost($author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new \Exception('Impossible d\'ajouter un billet !');
+        	throw new \Exception('Impossible d\'ajouter un post !');
         }
         else {
-            header('Location: ' .BASE_URL. 'index.php');
+            header('Location: ' .BASE_URL. 'index.php/post');
         }
     }
 
@@ -53,7 +58,7 @@ class PostController extends Controller
     {
         $postId = $this->_request->getParameter("id");
         $data['post'] = $this->_postManager->getPost($postId);
-        $this->generateView('postForm', $data);
+        $this->generateView('editPostForm', $data);
     }
 
     public function editPost()
@@ -67,7 +72,7 @@ class PostController extends Controller
         $affectedLines = $this->_postManager->updatePost($postId, $author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new \Exception('Impossible de modifier le billet !');
+        	throw new \Exception('Impossible de modifier le post !');
         }
         else {
             header('Location: ' .BASE_URL. 'index.php/post/post/' .$postId);

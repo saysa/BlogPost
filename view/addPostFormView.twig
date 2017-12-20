@@ -1,0 +1,35 @@
+{% extends 'template.twig' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Mon blog !</h1>
+    <p>
+    	<a href="index.php/post">Retour à la liste des posts</a><br>
+    </p>
+
+    <form action="index.php/post/newPost" method="post">
+        <h2>Ajouter un post</h2>
+        <div>
+            <label for="author">Auteur</label><br />
+            <input type="text" id="author" name="author" />
+        </div>      
+        <div>
+            <label for="title">Titre</label><br />
+            <input type="text" id="title" name="title" />
+        </div>
+        <div>
+            <label for="lead_paragraph">Chapô</label><br />
+            <textarea id="lead_paragraph" name="lead_paragraph"></textarea>
+        </div>      
+        <div>
+            <label for="content">Contenu</label><br />
+            <textarea id="content" name="content"></textarea>
+        </div>
+        <div>
+            <input type="submit" />
+        </div>
+    </form>
+{% endblock %}
