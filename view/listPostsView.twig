@@ -11,7 +11,7 @@
             <h3>
                 {{ post.title }}<br>
                 Par {{ post.author }} - 
-                <em>dernière modification {{ post.last_update }}</em>
+                <em>dernière modification {{ post.last_update_date|date("d/m/Y H:i:s") }}</em>
             </h3>
                 
             <p>
