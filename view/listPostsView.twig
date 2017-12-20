@@ -18,6 +18,8 @@
                 <strong>{{ post.lead_paragraph|nl2br }}</strong>
                 <br>
                 <em><a href="index.php/post/post/{{ post.id }}">Voir le post</a></em>
+                <br>
+                <em><a href="index.php/post/deletePost/{{ post.id }}">Supprimer le post</a></em>
             </p>
         </article>
     {% endfor %}
