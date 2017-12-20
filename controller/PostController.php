@@ -72,10 +72,24 @@ class PostController extends Controller
         $affectedLines = $this->_postManager->updatePost($postId, $author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new \Exception('Impossible de modifier le post !');
+            throw new \Exception('Impossible de modifier le post !');
         }
         else {
             header('Location: ' .BASE_URL. 'index.php/post/post/' .$postId);
+        }
+    }    
+
+    public function deletePost()
+    {
+        $postId = $this->_request->getParameter("id");
+
+        $affectedLines = $this->_postManager->deletePost($postId);
+
+        if ($affectedLines === false) {
+        	throw new \Exception('Impossible de supprimer le post !');
+        }
+        else {
+            header('Location: ' .BASE_URL. 'index.php/post');
         }
     }
 }

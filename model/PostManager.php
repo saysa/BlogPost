@@ -9,19 +9,19 @@ class PostManager extends Manager
     public function getPosts()
     {
         $sql = 'SELECT id, author, title, lead_paragraph, content, last_update_date FROM post ORDER BY last_update_date DESC LIMIT 0, 5';
-        $posts = $this->executeRequest($sql);
+        $res = $this->executeRequest($sql);
         
-        return $posts->fetchAll();
+        return $res->fetchAll();
     }
 
     public function getPost($postId)
     {
         $sql = 'SELECT id, author, title, lead_paragraph, content, created_date, last_update_date FROM post WHERE id = ?';
         $params = array($postId);
-        $post = $this->executeRequest($sql, $params);
+        $res = $this->executeRequest($sql, $params);
 
-        if ($post->rowCount() == 1) 
-            return $post->fetch();
+        if ($res->rowCount() == 1) 
+            return $res->fetch();
         else
             throw new \Exception("Aucun post ne correspond à l'identifiant '" .$postId. "'");
     }
@@ -35,9 +35,9 @@ class PostManager extends Manager
             'lead_paragraph' => $lead_paragraph, 
             'content'        => $content
         );
-        $affectedLines = $this->executeRequest($sql, $params);
+        $insert = $this->executeRequest($sql, $params);
 
-        return $affectedLines;
+        return $insert;
     }
 
     public function updatePost($postId, $author, $title, $lead_paragraph, $content)
@@ -50,8 +50,23 @@ class PostManager extends Manager
             'lead_paragraph' => $lead_paragraph, 
             'content'        => $content
         );
-        $affectedLines = $this->executeRequest($sql, $params);
+        $update = $this->executeRequest($sql, $params);
 
-        return $affectedLines;
+        if ($update->rowCount() == 1) 
+            return $update;
+        else
+            throw new \Exception("Aucun post ne correspond à l'identifiant '" .$postId. "'");
+    }
+
+    public function deletePost($postId)
+    {
+        $sql = 'DELETE FROM post WHERE id = ?';
+        $params = array($postId);
+        $delete = $this->executeRequest($sql, $params);
+
+        if ($delete->rowCount() == 1) 
+            return $delete;
+        else
+            throw new \Exception("Aucun post ne correspond à l'identifiant '" .$postId. "'");
     }
 }
