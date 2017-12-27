@@ -57,9 +57,10 @@ class Router
 
 	    $controllerClass = $controller. "Controller";
 	    $controllerFile = "controller/" . $controllerClass . ".php";
+	    $controllerClassWithNamespace = "\OC\BlogPost\Controller\\" .$controllerClass;
 	    if (file_exists($controllerFile)) {
 	    	require_once($controllerFile);
-	        $controller = new $controllerClass($this->_twig);
+	        $controller = new $controllerClassWithNamespace($this->_twig);
 	        $controller->setRequest($request);
 	        return $controller;
 	    }

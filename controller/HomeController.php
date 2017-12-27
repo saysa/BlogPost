@@ -1,5 +1,5 @@
 <?php
-// namespace OC\BlogPost\Controller;
+namespace OC\BlogPost\Controller;
 
 require_once('framework/Controller.php');
 use \OC\BlogPost\Framework\Controller;
