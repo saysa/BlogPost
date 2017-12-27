@@ -4,9 +4,6 @@ namespace OC\BlogPost\Framework;
 require_once('Request.php');
 use \OC\BlogPost\Framework\Request;
 
-// require('controller/PostController.php');
-// use \OC\BlogPost\Controller\PostController;
-
 require_once('View.php');
 use \OC\BlogPost\Framework\View;
 

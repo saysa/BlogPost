@@ -14,5 +14,13 @@ class HomeController extends Controller
     public function index()
     {
         $this->generateView('home');
+    }    
+
+    public function contact()
+    {
+		$name       = $this->_request->getParameter("name");
+		$first_name = $this->_request->getParameter("first_name");
+		$email      = $this->_request->getParameter("email");
+		$message    = $this->_request->getParameter("message");
     }
 }
