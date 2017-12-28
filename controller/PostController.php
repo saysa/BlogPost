@@ -1,13 +1,11 @@
 <?php
-// namespace OC\BlogPost\Controller;
+namespace OC\BlogPost\Controller;
 
 require_once('framework/Controller.php');
 use \OC\BlogPost\Framework\Controller;
 
 require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
-
-// use \OC\BlogPost\Framework\View;
 
 class PostController extends Controller
 {
