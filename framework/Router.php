@@ -10,17 +10,14 @@ use \OC\BlogPost\Framework\View;
 class Router 
 {
 	private $_twig;
-	// private $_postController;
 
 	public function __construct(\Twig_Environment $twig) 
 	{
 		$this->_twig = $twig;
-	    // $this->_postController = new PostController($twig);
 	}
 
 	public function routeRequest()
 	{
-		// http://localhost/BlogPost/index.php/post/114
 		try {
 			preg_match('#^/BlogPost/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
 		    if ( ! empty($matches) && isset($matches[1])) { 

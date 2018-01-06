@@ -23,10 +23,10 @@ abstract class Manager
     {
     	if (SELF::$_db === null) {
 			$dsn      = Configuration::get("dsn"); 
-			$login    = Configuration::get("login");
-			$password = Configuration::get("password");
+			$login    = Configuration::get("db_login");
+			$password = Configuration::get("db_password");
 	    	SELF::$_db = new \PDO($dsn, $login, $password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
 	    }
     	return SELF::$_db;
-    }
+    }    
 }

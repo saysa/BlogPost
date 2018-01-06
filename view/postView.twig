@@ -20,7 +20,43 @@
         	<strong>{{ post.lead_paragraph|nl2br }}</strong>
         	{{ post.content|nl2br }}
         	<br>
-        	<em><a href="index.php/post/postForm/{{ post.id }}">Modifier le post</a></em>
+            <em><a href="index.php/post/postForm/{{ post.id }}">Modifier le post</a></em>
     	</p>
     </article>
+
+    {% for comment in comments %}
+        <article class="comments">
+            <h3>
+                {{ comment.title }}<br>
+                Par {{ comment.author }} - 
+                <em>dernière modification {{ comment.created_date|date("d/m/Y H:i:s") }}</em>
+            </h3>
+                
+            <p>{{ comment.content|nl2br }}</p>
+        </article>
+    {% endfor %}
+
+     <form action="index.php/post/newComment/{{ post.id }}" method="post">
+        <div class="form-group">
+            <div class="legend">
+                <strong>Ajouter un commentaire :</strong><br>
+                <span>champs requis <strong>*</strong></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="author">Auteur<strong>*</strong> :</label>
+            <input type="text" class="form-control" name="author" id="author" placeholder="Auteur" required>
+        </div>        
+        <div class="form-group">
+            <label for="title">Titre<strong>*</strong> :</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Titre" required>
+        </div>      
+        <div class="form-group">
+            <label for="content">Contenu<strong>*</strong> :</label>
+            <textarea class="form-control resizable" rows="5" name="content" id="content" placeholder="Contenu" required></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Ajouter</button>
+        </div>
+    </form> 
 {% endblock %}

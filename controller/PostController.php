@@ -7,14 +7,19 @@ use \OC\BlogPost\Framework\Controller;
 require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
 
+require_once('model/CommentManager.php');
+use \OC\BlogPost\Model\CommentManager;
+
 class PostController extends Controller
 {
     private $_postManager;
+    private $_commentManager;
 
     public function __construct(\Twig_Environment $twig) 
     {
         parent::__construct($twig);
-        $this->_postManager = new PostManager();
+        $this->_postManager    = new PostManager();
+        $this->_commentManager = new CommentManager();
     }
 
     public function index()
@@ -26,7 +31,8 @@ class PostController extends Controller
     public function post()
     {
         $postId = $this->_request->getParameter("id");
-        $data['post'] = $this->_postManager->getPost($postId);
+        $data['post']     = $this->_postManager->getPost($postId);
+        $data['comments'] = $this->_commentManager->getComments($postId);
         $this->generateView('post', $data);
     }
 
@@ -45,7 +51,7 @@ class PostController extends Controller
         $affectedLines = $this->_postManager->addPost($author, $title, $lead_paragraph, $content);
 
         if ($affectedLines === false) {
-        	throw new \Exception('Impossible d\'ajouter un post !');
+        	throw new \Exception("Impossible d'ajouter un post !");
         }
         else {
             header('Location: ' .BASE_URL. 'index.php/post');
@@ -88,6 +94,23 @@ class PostController extends Controller
         }
         else {
             header('Location: ' .BASE_URL. 'index.php/post');
+        }
+    }
+
+    public function newComment()
+    {
+        $postId         = $this->_request->getParameter("id");
+        $author         = $this->_request->getParameter("author");
+        $title          = $this->_request->getParameter("title");
+        $content        = $this->_request->getParameter("content");
+
+        $affectedLines = $this->_commentManager->addComment($postId, $author, $title, $content);
+
+        if ($affectedLines === false) {
+            throw new \Exception("Impossible d'ajouter un commentaire !");
+        }
+        else {
+            header('Location: ' .BASE_URL. 'index.php/post/post/' .$postId);
         }
     }
 }
