@@ -40,10 +40,6 @@ abstract class Controller
 
     protected function generateView($view, array $data = array())
     {
-        /*$controllerClass = get_class($this);
-        echo $controllerClass; 
-        $controller = str_replace('Controller', '', $controllerClass);*/
-
         $view = new View($this->_twig, $view);
         $view->generate($data);
     }

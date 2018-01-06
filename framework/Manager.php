@@ -7,7 +7,6 @@ use \OC\BlogPost\Framework\Configuration;
 abstract class Manager
 {
 	private static $_db;
-	private static $_mailer;
 
 	protected function executeRequest($sql, $params = null) {
 		if ($params == null) {
@@ -30,17 +29,4 @@ abstract class Manager
 	    }
     	return SELF::$_db;
     }    
-
-    private static function mailerConnect()
-    {
-    	if (SELF::$_mailer === null) {
-			$host     = Configuration::get("mailer_host"); 
-			$user     = Configuration::get("mailer_user");
-			$password = Configuration::get("mailer_password");
-	    	SELF::$_mailer = (new \Swift_SmtpTransport($host, 465, 'ssl'))
-	            ->setUsername($user)
-	            ->setPassword($password);
-	    }
-    	return SELF::$_mailer;
-    }
 }
