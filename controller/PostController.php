@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $data['posts'] = $this->_postManager->getPosts();
-        $this->generateView('listPosts', $data);
+        $this->generateView('blog/listPosts', $data);
     }
 
     public function post()
@@ -28,12 +28,12 @@ class PostController extends Controller
         $postId = $this->_request->getParameter("id"); 
         $data['post']     = $this->_postManager->getPost($postId);
         $data['comments'] = $this->_commentManager->getComments($postId);
-        $this->generateView('post', $data);
+        $this->generateView('blog/post', $data);
     }
 
     public function newPostForm()
     {
-        $this->generateView('addPostForm');
+        $this->generateView('blog/addPostForm');
     }
 
     public function newPost()
@@ -57,7 +57,7 @@ class PostController extends Controller
     {
         $postId = $this->_request->getParameter("id");
         $data['post'] = $this->_postManager->getPost($postId);
-        $this->generateView('editPostForm', $data);
+        $this->generateView('blog/editPostForm', $data);
     }
 
     public function editPost()

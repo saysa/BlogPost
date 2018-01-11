@@ -12,7 +12,7 @@ class View
     }
 
     public function generate($data = array()) {
-        if (file_exists('view/' .$this->_file)) { 
+        if (file_exists('view/'.$this->_file)) {
             $data['base_url'] = BASE_URL;
             echo $this->_twig->render($this->_file, $data);
         } else {

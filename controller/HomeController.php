@@ -15,7 +15,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $this->generateView('home');
+        $this->generateView('home/home');
     }    
 
     private static function mailerTransport()
