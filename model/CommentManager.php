@@ -5,10 +5,11 @@ use \OC\BlogPost\Framework\Manager;
 
 class CommentManager extends Manager
 {
-    public function getcomments()
+    public function getcomments($postId)
     {
-        $sql = 'SELECT author, title, content, created_date FROM comment ORDER BY created_date DESC';
-        $res = $this->executeRequest($sql);
+        $sql = 'SELECT author, title, content, created_date FROM comment WHERE post_id = ? ORDER BY created_date DESC';
+        $params = array($postId);
+        $res = $this->executeRequest($sql, $params);
         
         return $res->fetchAll();
     }

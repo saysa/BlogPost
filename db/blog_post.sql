@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 06 Janvier 2018 à 16:13
+-- Généré le :  Jeu 11 Janvier 2018 à 18:32
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -32,8 +32,7 @@ CREATE TABLE `comment` (
   `author` varchar(32) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` text,
-  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -77,12 +76,12 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 --
 -- Contraintes pour les tables exportées
 --
@@ -91,7 +90,7 @@ ALTER TABLE `post`
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
