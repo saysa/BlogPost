@@ -25,7 +25,7 @@ class PostController extends Controller
 
     public function post()
     {
-        $postId = $this->_request->getParameter("id");
+        $postId = $this->_request->getParameter("id"); 
         $data['post']     = $this->_postManager->getPost($postId);
         $data['comments'] = $this->_commentManager->getComments($postId);
         $this->generateView('post', $data);
