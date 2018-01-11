@@ -1,13 +1,8 @@
 <?php
 namespace OC\BlogPost\Controller;
 
-require_once('framework/Controller.php');
 use \OC\BlogPost\Framework\Controller;
-
-require_once('model/PostManager.php');
 use \OC\BlogPost\Model\PostManager;
-
-require_once('model/CommentManager.php');
 use \OC\BlogPost\Model\CommentManager;
 
 class PostController extends Controller

@@ -8,7 +8,10 @@ $twig = new Twig_Environment($loader, array(
     'cache' => false 
 ));
 
-require_once('framework/Router.php');
+require_once('framework/Autoloader.php'); 
+use \OC\BlogPost\Framework\Autoloader;
+Autoloader::register(); 
+
 use \OC\BlogPost\Framework\Router;
 
 $routeur = new Router($twig);

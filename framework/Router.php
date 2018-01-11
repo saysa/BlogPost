@@ -1,10 +1,7 @@
 <?php
 namespace OC\BlogPost\Framework;
 
-require_once('Request.php');
 use \OC\BlogPost\Framework\Request;
-
-require_once('View.php');
 use \OC\BlogPost\Framework\View;
 
 class Router 

@@ -1,7 +1,6 @@
 <?php
 namespace OC\BlogPost\Model;
 
-require_once('framework/Manager.php');
 use \OC\BlogPost\Framework\Manager;
 
 class CommentManager extends Manager
