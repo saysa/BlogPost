@@ -1,7 +1,6 @@
 <?php 
 namespace OC\BlogPost\Framework;
 
-require_once('Configuration.php');
 use \OC\BlogPost\Framework\Configuration;
 
 abstract class Manager
