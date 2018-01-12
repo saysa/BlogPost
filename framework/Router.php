@@ -1,8 +1,8 @@
 <?php
 namespace OC\BlogPost\Framework;
 
-use \OC\BlogPost\Framework\Request;
-use \OC\BlogPost\Framework\View;
+/*use \OC\BlogPost\Framework\Request;
+use \OC\BlogPost\Framework\View;*/
 
 class Router 
 {
