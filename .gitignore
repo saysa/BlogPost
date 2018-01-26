@@ -1,2 +1,3 @@
-/config/
-/vendor/
+/config/dev.ini
+/config/prod.ini
+/vendor

@@ -14,7 +14,9 @@ class Autoloader
             if (isset($matches[1]) && isset($matches[2])) { 
                 $folder = strtolower($matches[1]);
                 $file   = $matches[2];
-                require_once($folder.'/'.$file.'.php');
+                if (file_exists($folder.'/'.$file.'.php')) {
+                    require_once($folder.'/'.$file.'.php');
+                }
             }
         }
     }
