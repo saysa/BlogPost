@@ -18,11 +18,11 @@ class Configuration
 		if (SELF::$_parameters == NULL) {
 			switch (ENVIRONMENT) {
 				case 'development':
-					$filePath = "Config/dev.ini";
+					$filePath = "config/dev.ini";
 					break;				
 
 				case 'production':
-					$filePath = "Config/prod.ini";
+					$filePath = "config/prod.ini";
 					break;
 				
 			}
