@@ -8,17 +8,19 @@ class Router
 {
 	private $_twig;
 	private $_view;
+	private $_request;
 
-	public function __construct(\Twig_Environment $twig, View $view)
+	public function __construct(\Twig_Environment $twig, View $view, Request $request)
 	{
 		$this->_twig = $twig;
 		$this->_view = $view;
+		$this->_request = $request;
 	}
 
 	public function routeRequest()
 	{
 		try {
-			preg_match('#^/BlogPost/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
+            preg_match('#^/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
 		    if ( ! empty($matches) && isset($matches[1])) { 
 		    	$_GET['controller'] = $matches[1];
 		    	if (isset($matches[2])) {
@@ -29,10 +31,9 @@ class Router
 		    	}
 		    }
 
-		    $request = new Request(array_merge($_GET, $_POST));
 
-		    $controller = $this->createController($request);
-		    $action = $this->createAction($request);
+		    $controller = $this->createController();
+		    $action = $this->createAction();
 
 		    $controller->executeAction($action);
 		}
@@ -41,10 +42,10 @@ class Router
 		}
 	}
 
-	public function createController(Request $request) {
-	    $controller = "Home";  
-	    if ($request->isParameter('controller')) {
-	        $controller = $request->getParameter('controller');
+	public function createController() {
+	    $controller = "Home";
+	    if ($this->_request->isParameter('controller')) {
+	        $controller = $this->_request->getParameter('controller');
 	        $controller = ucfirst(strtolower($controller));
 	    }
 
@@ -54,7 +55,7 @@ class Router
 	    if (file_exists($controllerFile)) {
 	    	require_once($controllerFile);
 	        $controller = new $controllerClassWithNamespace($this->_twig, $this->_view);
-	        $controller->setRequest($request);
+	        $controller->setRequest($this->_request);
 	        return $controller;
 	    }
 	    else {
@@ -62,10 +63,10 @@ class Router
 	    }
 	}
 
-	public function createAction(Request $request) {
+	public function createAction() {
 	    $action = 'index'; 
-	    if ($request->isParameter('action')) {
-	        $action = $request->getParameter('action');
+	    if ($this->_request->isParameter('action')) {
+	        $action = $this->_request->getParameter('action');
 	    }
 	    return $action;
 	}

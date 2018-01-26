@@ -19,8 +19,9 @@ class App
 
     private function run()
     {
+        #$this->container->getRouter()->routeRequest();
         try {
-            preg_match('#^/BlogPost/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
+            preg_match('#^/index.php?/(\w+)/?(\w+)?/?(\d+)?#i', $_SERVER['REQUEST_URI'], $matches);
             if ( ! empty($matches) && isset($matches[1])) {
                 $_GET['controller'] = $matches[1];
                 if (isset($matches[2])) {
@@ -32,8 +33,8 @@ class App
             }
 
 
-            $controller = $this->container->getRouter()->createController($this->container->getRequest());
-            $action = $this->container->getRouter()->createAction($this->container->getRequest());
+            $controller = $this->container->getRouter()->createController();
+            $action = $this->container->getRouter()->createAction();
 
             $controller->executeAction($action);
         }

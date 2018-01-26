@@ -2,6 +2,7 @@
 namespace OC\BlogPost\Controller;
 
 use \OC\BlogPost\Framework\Controller;
+use OC\BlogPost\Framework\View;
 use \OC\BlogPost\Model\PostManager;
 use \OC\BlogPost\Model\CommentManager;
 
@@ -10,9 +11,9 @@ class PostController extends Controller
     private $_postManager;
     private $_commentManager;
 
-    public function __construct(\Twig_Environment $twig) 
+    public function __construct(\Twig_Environment $twig, View $view)
     {
-        parent::__construct($twig);
+        parent::__construct($twig, $view);
         $this->_postManager    = new PostManager();
         $this->_commentManager = new CommentManager();
     }

@@ -8,7 +8,7 @@ class View
 
     public function __construct(\Twig_Environment $twig) {
         $this->_twig = $twig;
-        $this->_file = 'error';
+        $this->_file = 'errorView.twig';
     }
 
     public function generate($data = array()) {
