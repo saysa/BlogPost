@@ -7,10 +7,12 @@ use \OC\BlogPost\Framework\View;*/
 class Router 
 {
 	private $_twig;
+	private $_view;
 
-	public function __construct(\Twig_Environment $twig) 
+	public function __construct(\Twig_Environment $twig, View $view)
 	{
 		$this->_twig = $twig;
+		$this->_view = $view;
 	}
 
 	public function routeRequest()
@@ -39,7 +41,7 @@ class Router
 		}
 	}
 
-	private function createController(Request $request) {
+	public function createController(Request $request) {
 	    $controller = "Home";  
 	    if ($request->isParameter('controller')) {
 	        $controller = $request->getParameter('controller');
@@ -51,7 +53,7 @@ class Router
 	    $controllerClassWithNamespace = "\OC\BlogPost\Controller\\" .$controllerClass;
 	    if (file_exists($controllerFile)) {
 	    	require_once($controllerFile);
-	        $controller = new $controllerClassWithNamespace($this->_twig);
+	        $controller = new $controllerClassWithNamespace($this->_twig, $this->_view);
 	        $controller->setRequest($request);
 	        return $controller;
 	    }
@@ -60,7 +62,7 @@ class Router
 	    }
 	}
 
-	private function createAction(Request $request) {
+	public function createAction(Request $request) {
 	    $action = 'index'; 
 	    if ($request->isParameter('action')) {
 	        $action = $request->getParameter('action');
@@ -68,9 +70,8 @@ class Router
 	    return $action;
 	}
 
-	private function error($errorMessage) 
+	public function error($errorMessage)
 	{
-		$view = new View($this->_twig, 'error');
-		$view->generate(['errorMessage' => $errorMessage]);
+		$this->_view->generate(['errorMessage' => $errorMessage]);
 	}
 }

@@ -1,8 +1,6 @@
 <?php
 namespace OC\BlogPost\Framework;
 
-use \OC\BlogPost\Framework\Request;
-use \OC\BlogPost\Framework\View;
 
 
 abstract class Controller 
@@ -10,10 +8,12 @@ abstract class Controller
     private $_twig;
     private $_action;
     protected $_request;
+    private $_view;
 
-    public function __construct(\Twig_Environment $twig) 
+    public function __construct(\Twig_Environment $twig, View $view)
     {
         $this->_twig = $twig;
+        $this->_view = $view;
     }
 
     public function setRequest(Request $request)
@@ -37,8 +37,8 @@ abstract class Controller
 
     protected function generateView($view, array $data = array())
     {
-        $view = new View($this->_twig, $view);
-        $view->generate($data);
+        $this->_view->setView($view);
+        $this->_view->generate($data);
     }
 
 }
