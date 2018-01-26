@@ -54,7 +54,8 @@ class Container
             case '\OC\BlogPost\Controller\HomeController':
                 return new $controller(
                     $this->getTwig(),
-                    $this->getView()
+                    $this->getView(),
+                    $this->getMailer()
                 );
                 break;
         }
@@ -69,5 +70,10 @@ class Container
     public function getCommentManager()
     {
         return new CommentManager();
+    }
+
+    public function getMailer()
+    {
+        return new Email();
     }
 }

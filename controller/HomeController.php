@@ -7,9 +7,12 @@ use \OC\BlogPost\Service\Email;
 
 class HomeController extends Controller
 {
-    public function __construct(\Twig_Environment $twig, View $view)
+    private $mailer;
+
+    public function __construct(\Twig_Environment $twig, View $view, Email $mailer)
     {
         parent::__construct($twig, $view);
+        $this->mailer = $mailer;
     }
 
     public function index()
@@ -25,13 +28,11 @@ class HomeController extends Controller
         $message    = $this->_request->getParameter("message");
         $username   = $first_name.' '.$name;
 
-        $mailer = new Email;
+        $this->mailer->subject('Message de '.$username);
+        $this->mailer->from([$email => $username]);
+        $this->mailer->message($message);
 
-        $mailer->subject('Message de '.$username);
-        $mailer->from([$email => $username]);
-        $mailer->message($message);
-
-        if ( ! $mailer->send($message)) {
+        if ( ! $this->mailer->send($message)) {
             throw new \Exception("Le mail n'a pas été pas envoyé !");
         } else {
             header('Location: ' .BASE_URL. 'index.php/home');
