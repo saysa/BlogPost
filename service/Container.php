@@ -15,7 +15,7 @@ class Container
      */
     public function getRouter()
     {
-        return new Router($this->getTwig(), $this->getView(), $this->getRequest());
+        return new Router($this->getView(), $this->getRequest());
     }
 
     /**

@@ -6,13 +6,11 @@ use \OC\BlogPost\Framework\View;*/
 
 class Router 
 {
-	private $_twig;
 	private $_view;
 	private $_request;
 
-	public function __construct(\Twig_Environment $twig, View $view, Request $request)
+	public function __construct(View $view, Request $request)
 	{
-		$this->_twig = $twig;
 		$this->_view = $view;
 		$this->_request = $request;
 	}
