@@ -2,12 +2,10 @@
 namespace OC\BlogPost\Controller;
 
 use \OC\BlogPost\Framework\Controller;
-use \OC\BlogPost\Framework\Configuration;
+use \OC\BlogPost\Service\Email;
 
 class HomeController extends Controller
 {
-    private static $_mailerTransport;
-
     public function __construct(\Twig_Environment $twig) 
     {
         parent::__construct($twig);
@@ -18,21 +16,6 @@ class HomeController extends Controller
         $this->generateView('home/home');
     }    
 
-    private static function mailerTransport()
-    {
-        if (SELF::$_mailerTransport === null) {
-            $host     = Configuration::get("mailer_host"); 
-            $port     = Configuration::get("mailer_port"); 
-            $protocol = Configuration::get("mailer_protocol"); 
-            $user     = Configuration::get("mailer_user");
-            $password = Configuration::get("mailer_password");
-            SELF::$_mailerTransport = (new \Swift_SmtpTransport($host, $port, $protocol))
-                ->setUsername($user)
-                ->setPassword($password);
-        }
-        return SELF::$_mailerTransport;
-    }
-
     public function contact()
     {
         $name       = $this->_request->getParameter("name");
@@ -41,14 +24,11 @@ class HomeController extends Controller
         $message    = $this->_request->getParameter("message");
         $username   = $first_name.' '.$name;
 
-        $transport = SELF::mailerTransport();
+        $mailer = new Email;
 
-        $mailer = new \Swift_Mailer($transport);
-
-        $message = (new \Swift_Message('Message de '.$username))
-          ->setFrom([$email => $username])
-          ->setTo('percevalseb@gmail.com')
-          ->setBody($message, 'text/html');
+        $mailer->subject('Message de '.$username);
+        $mailer->from([$email => $username]);
+        $mailer->message($message);
 
         if ( ! $mailer->send($message)) {
             throw new \Exception("Le mail n'a pas été pas envoyé !");
