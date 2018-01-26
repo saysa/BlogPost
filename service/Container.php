@@ -10,12 +10,23 @@ use OC\BlogPost\Model\PostManager;
 
 class Container
 {
+    private $postManager;
+    private $commentManager;
+    private $mailer;
+    private $view;
+    private $request;
+    private $router;
+    private $twig;
+
     /**
      * @return Router
      */
     public function getRouter()
     {
-        return new Router($this->getView(), $this->getRequest());
+        if ($this->router === null) {
+            $this->router = new Router($this->getView(), $this->getRequest());
+        }
+        return $this->router;
     }
 
     /**
@@ -23,20 +34,29 @@ class Container
      */
     public function getTwig()
     {
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../view');
-        return new \Twig_Environment($loader, array(
-            'cache' => false
-        ));
+        if ($this->twig === null) {
+            $loader = new \Twig_Loader_Filesystem(__DIR__.'/../view');
+            $this->twig = new \Twig_Environment($loader, array(
+                'cache' => false
+            ));
+        }
+        return $this->twig;
     }
 
     public function getRequest()
     {
-        return new Request(array_merge($_GET, $_POST));
+        if ($this->request === null) {
+            $this->request = new Request(array_merge($_GET, $_POST));
+        }
+        return $this->request;
     }
 
     public function getView()
     {
-        return new View($this->getTwig());
+        if ($this->view === null) {
+            $this->view = new View($this->getTwig());
+        }
+        return $this->view;
     }
 
     public function getController($controller)
@@ -64,16 +84,25 @@ class Container
 
     public function getPostManager()
     {
-        return new PostManager();
+        if ($this->postManager === null) {
+            $this->postManager = new PostManager();
+        }
+        return $this->postManager;
     }
 
     public function getCommentManager()
     {
-        return new CommentManager();
+        if ($this->commentManager === null) {
+            $this->commentManager = new CommentManager();
+        }
+        return $this->commentManager;
     }
 
     public function getMailer()
     {
-        return new Email();
+        if ($this->mailer === null) {
+            $this->mailer = new Email();
+        }
+        return $this->mailer;
     }
 }
