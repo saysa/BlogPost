@@ -41,14 +41,14 @@ class HomeController extends Controller
         $message    = $this->_request->getParameter("message");
         $username   = $first_name.' '.$name;
 
+        $transport = SELF::mailerTransport();
+
+        $mailer = new \Swift_Mailer($transport);
+
         $message = (new \Swift_Message('Message de '.$username))
           ->setFrom([$email => $username])
           ->setTo('percevalseb@gmail.com')
           ->setBody($message, 'text/html');
-
-        $transport = SELF::mailerTransport();
-        
-        $mailer = new \Swift_Mailer($transport);
 
         if ( ! $mailer->send($message)) {
             throw new \Exception("Le mail n'a pas été pas envoyé !");
