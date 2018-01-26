@@ -32,44 +32,10 @@ class Router
 		    }
 
 		    $this->_request->setParameter(array_merge($_GET, $_POST));
-
-		    $controller = $this->createController();
-		    $action = $this->createAction();
-
-		    $controller->executeAction($action);
 		}
 		catch(\Exception $e) {
 			$this->error($e->getMessage());
 		}
-	}
-
-	public function createController() {
-	    $controller = "Home";
-	    if ($this->_request->isParameter('controller')) {
-	        $controller = $this->_request->getParameter('controller');
-	        $controller = ucfirst(strtolower($controller));
-	    }
-
-	    $controllerClass = $controller. "Controller";
-	    $controllerFile = "controller/" . $controllerClass . ".php";
-	    $controllerClassWithNamespace = "\OC\BlogPost\Controller\\" .$controllerClass;
-	    if (file_exists($controllerFile)) {
-	    	require_once($controllerFile);
-	        $controller = new $controllerClassWithNamespace($this->_twig, $this->_view);
-	        $controller->setRequest($this->_request);
-	        return $controller;
-	    }
-	    else {
-	        throw new \Exception("Fichier '". $controllerFile. "' introuvable");
-	    }
-	}
-
-	public function createAction() {
-	    $action = 'index'; 
-	    if ($this->_request->isParameter('action')) {
-	        $action = $this->_request->getParameter('action');
-	    }
-	    return $action;
 	}
 
 	public function error($errorMessage)

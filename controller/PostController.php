@@ -11,11 +11,11 @@ class PostController extends Controller
     private $_postManager;
     private $_commentManager;
 
-    public function __construct(\Twig_Environment $twig, View $view)
+    public function __construct(\Twig_Environment $twig, View $view, PostManager $postManager, CommentManager $commentManager)
     {
         parent::__construct($twig, $view);
-        $this->_postManager    = new PostManager();
-        $this->_commentManager = new CommentManager();
+        $this->_postManager    = $postManager;
+        $this->_commentManager = $commentManager;
     }
 
     public function index()
