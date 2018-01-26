@@ -31,6 +31,7 @@ class Router
 		    	}
 		    }
 
+		    $this->_request->setParameter(array_merge($_GET, $_POST));
 
 		    $controller = $this->createController();
 		    $action = $this->createAction();
